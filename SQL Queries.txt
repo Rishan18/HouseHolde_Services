@@ -1,0 +1,83 @@
+CREATE DATABASE IF NOT EXISTS household_services;
+USE household_services;
+
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100),
+    dob DATE,
+    email VARCHAR(100) UNIQUE,
+    address TEXT,
+    password VARCHAR(255)
+);
+
+
+CREATE TABLE admin (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100),
+    password VARCHAR(255)
+);
+
+
+INSERT INTO admin (username, password)
+VALUES ('admin', '$2y$10$OznU1v8XlP0RwYkSLTrkG.8J2BLaH3U2W20gAcqY0kA8qZfGljlii');
+
+
+CREATE TABLE services (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(100),
+    description TEXT,
+    price DECIMAL(10,2),
+    image VARCHAR(255)
+);
+
+
+CREATE TABLE bookings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT,
+    service_id INT,
+    booking_date DATE,
+    full_name VARCHAR(100),
+    phone VARCHAR(20),
+    address TEXT,
+    status ENUM('Pending', 'Completed') DEFAULT 'Pending',
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (service_id) REFERENCES services(id)
+);
+
+
+CREATE TABLE messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100),
+    email VARCHAR(100),
+    message TEXT,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
+INSERT INTO services (category, description, price, image) VALUES
+('Electrician', 'Fix wiring, appliances, lights, fans and more.', 299.00, 'electrician.jpeg'),
+('Plumber', 'Leak repairs, pipe fittings, and drainage issues.', 349.00, 'plumber.jpeg'),
+('Cleaner', 'Deep cleaning for homes, kitchens, bathrooms, etc.', 399.00, 'cleaner.jpeg'),
+('Carpenter', 'Furniture assembly, repair, and fittings.', 499.00, 'carpenter.jpeg'),
+('AC Service', 'AC installation, repair, and cleaning.', 699.00, 'ac_service.jpeg');
+
+Summary
+
+Users Table:
+Stores registered users with fields like username, date of birth, email, address, and a hashed password.
+
+Admin Table:
+Stores admin credentials. A default admin (admin, password: admin123) is inserted using a pre-hashed password.
+
+Services Table:
+Contains service categories (like plumber, electrician) with a name, description, price, and image path.
+
+Bookings Table:
+Stores user bookings. It links users and services, captures booking date, personal details (name, phone, address), and tracks booking status (Pending or Completed).
+
+Messages Table:
+Saves messages submitted through the contact form including name, email, message content, and timestamp.
+
+Sample Data:
+Inserts demo services with prices and image names for initial testing and UI population.
