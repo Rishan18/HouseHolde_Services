@@ -68,4 +68,4 @@ EasyHome Services is a full-stack web application developed as part of a **colle
 
 ## 🙌 Author
 
-This project was developed by Suhaib K S as part of a college mini project. Contributions welcome!
+This project was developed by Rishan B H as part of a college mini project. Contributions welcome!
